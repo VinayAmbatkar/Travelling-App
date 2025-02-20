@@ -1,11 +1,8 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
-import colors from '../assets/Colors'
-import sizes from '../assets/Sizes'
-import { useFonts } from 'expo-font'
-import Button from '../Components/Button'
-import Lines from '../Components/Lines'
-import { useNavigation } from '@react-navigation/native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import colors from '../assets/Colors';
+import sizes from '../assets/Sizes';
+import { useNavigation } from '@react-navigation/native';
 
 type NavigationProps = {
     navigation: any,
@@ -13,63 +10,82 @@ type NavigationProps = {
 }
 
 export default function WelcomeScreenOne(props: NavigationProps) {
-
     const navigation = useNavigation();
-    const [loaded] = useFonts({
-        Montserrat: require('../assets/fonts/Montserrat.ttf'),
-    })
 
-    if(!loaded) {
-        return null;
-    }
+    return (
+        <View style={styles.container}>
+            <Text style={styles.textMain}>Case Tracker</Text>
+            <Text style={styles.textSecondary}>
+                Track Your Cases, USCIS & EOIR – All in One App!
+            </Text>
 
-  return (
-    <View style={styles.container}>
+            <View style={styles.pictureContainer}>
+                <Image 
+                    style={styles.picture} 
+                    source={require("../Images/juage1.png")}  // Replace with actual image
+                    resizeMode="contain"
+                />
+            </View>
 
-        <View style={styles.pictureContainer}>
-            <Image style={styles.picture} source={require("../Images/draw.jpg")} />
+            <TouchableOpacity 
+                style={styles.button} 
+                onPress={() => props.navigation.navigate('Login')}
+            >
+                <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.continueText}>Or Continue without Log in</Text>
         </View>
-    
-        <Text style={styles.textMain}>Explore a New World</Text>
-        <Text style={styles.textSecondary}>Find place for travel, campaign, hiking. Relax and enjoy your trip!</Text>
-
-        <Lines colorOne={`${colors.green}`} colorTwo={`${colors.gray}`}/>
-
-        <Button name="Next" onPress={ () => props.navigation.navigate('WelcomeScreenTwo')} />
-    </View>
-  )
+    );
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F8F8F8',
+        paddingHorizontal: 20,
     },
-    textMain:{
+    textMain: {
         fontFamily: 'Montserrat',
         fontWeight: '700',
         fontSize: sizes.headerSize,
         color: colors.main,
-        alignSelf: 'center',
-        marginBottom: 18,
+        textAlign: 'center',
+        marginBottom: 10,
     },
-    textSecondary:{
+    textSecondary: {
         fontFamily: 'Montserrat',
-        fontWeight: '700',
+        fontWeight: '600',
         fontSize: sizes.paragraphSize,
         color: colors.secondary,
         textAlign: 'center',
-        marginHorizontal: 45,
-        marginBottom: 45,
+        marginHorizontal: 20,
+        marginBottom: 20,
     },
-    pictureContainer:{
-        position: 'absolute',
-        top: 24,
-        width: '100%',
-        justifyContent: 'center',
+    pictureContainer: {
+        alignItems: 'center',
+        marginBottom: 30,
     },
-    picture:{
-        width: '100%',
-        height: 500,
+    picture: {
+        width: 300,
+        height: 250,
     },
-})
+    button: {
+        backgroundColor: colors.main,
+        paddingVertical: 12,
+        paddingHorizontal: 140,
+        borderRadius: 8,
+    },
+    buttonText: {
+        color: '#FFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    continueText: {
+        marginTop: 15,
+        fontSize: 14,
+        color: colors.secondary,
+    },
+});
